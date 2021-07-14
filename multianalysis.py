@@ -145,9 +145,9 @@ def compute_df_with_PCs(df, n_components=5, whiten=True, labels=None, return_var
     var_explained = pca.explained_variance_ratio_[:pca.n_components_]
 
     # concat labels to PCA coords (in a DataFrame)
-    principaldf = pd.DataFrame(pc_coords, columns=[f'PC {i}' for i in range(1, pca.n_components_+1)])
+    principaldf = pd.DataFrame(pc_coords, index=df.index, columns=[f'PC {i}' for i in range(1, pca.n_components_+1)])
     if labels is not None:
-        labels_col = pd.DataFrame(labels, index=df.index, columns=['Label'])
+        labels_col = pd.DataFrame(labels, index=principaldf.index, columns=['Label'])
         principaldf = pd.concat([principaldf, labels_col], axis=1)
     if not return_var_ratios:
         return principaldf
